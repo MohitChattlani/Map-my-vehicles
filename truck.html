@@ -29,17 +29,19 @@
         var xinc,yinc;
         var map;
         var truckmarker;
-        var marker1,marker2,marker3,marker4,marker5;
+        var marker1,marker2,marker3,marker4,marker5,marker6;
         var i=0;
-        //var delhi={lat:28.7041,lng:77.1025};
-        //var agra={lat:27.1767,lng:78.0081};
         var place;
         var delhi={lat:28.704,lng:77.102};
         var agra={lat:27.176,lng:78.008};
         var allahabad={lat:25.435,lng:81.846};
         var varanasi={lat:25.317,lng:82.973};
         var gaya={lat:24.795,lng:84.999};
-        var route=[delhi,agra,allahabad,varanasi,gaya];
+        var jamshedpur={lat:22.804,lng:86.202};
+        var panipat={lat:29.390,lng:76.963};
+        var aligarh={lat:27.897,lng:78.088};
+        var mathura={lat:27.492,lng:77.673};
+        var route=[delhi,agra,allahabad,varanasi,gaya,jamshedpur];
         function initMap()
         {
             var flag='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
@@ -79,6 +81,12 @@
             });
             marker5=new google.maps.Marker({
                 position:gaya,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            marker6=new google.maps.Marker({
+                position:jamshedpur,
                 map:map,
                 icon:flag,
                 animation:google.maps.Animation.DROP
