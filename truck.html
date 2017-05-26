@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Map my vehicles</title>
+    <title>Map my vehicles</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1.0">
-	<style type="text/css">
-		#map
-		{
-			height: 100%;
-			width: 80%;
-		}
-		html,body
-		{
-			height: 100%;
-			padding: 0;
-			margin: 0;
-		}
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <style type="text/css">
+        #map
+        {
+            height: 100%;
+            width: 80%;
+            transition-duration: 2s;
+        }
+        html,body
+        {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -49,12 +50,13 @@
                 icon:image,
                 animation:google.maps.Animation.DROP
             });
-            marker.addListener('click',animate);        }
+            marker.addListener('click',animate);        
+        }
         function animate()
         {
             float1=delhi.lat;
             float2=delhi.lng;
-            if (delhi.lat<agra.lat)
+            if (delhi.lat<route.delhi.lat)
             {
                 xinc=.001;
                 console.log("cond1");
@@ -64,7 +66,7 @@
                 xinc=-.001;
                 console.log("cond2");
             }
-            if (delhi.lng<agra.lng)
+            if (delhi.lng<route.delhi.lng)
             {
                 yinc=.001;
                 console.log("cond3");
@@ -74,27 +76,29 @@
                 yinc=-.001;
                 console.log("cond4");
             }
-            while (true)
-            {
-                if (float1==agra.lat ) {
-                	xinc=0;
+            inc();
+        }
+        function inc()
+        {       
+                if (float1==route.delhi.lat ) {
+                    xinc=0;
                 }
-                if (float2==agra.lng)
+                if (float2==route.delhi.lng)
                 {
-                	yinc=0;
+                    yinc=0;
                 }
-                if (float1==agra.lat && float2==agra.lng)
+                if (float1==route.delhi.lat && float2==route.delhi.lng)
                 {
-                	break;
+                    return;
                 }  
                 float1=float1+xinc;
                 float2=float2+yinc;
                 float1=parseFloat(float1.toFixed(3));
-            	float2=parseFloat(float2.toFixed(3));
+                float2=parseFloat(float2.toFixed(3));
                 place={lat:float1,lng:float2};
                 console.log(place);
-                marker.setPosition(place);    
-            }   
+                setTimeout(inc,3); //3ms
+                marker.setPosition(place);       
         }
     </script>
     <script async defer
