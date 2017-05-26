@@ -9,7 +9,7 @@
         #map
         {
             height: 100%;
-            width: 80%;
+            width: 100%;
             transition-duration: 2s;
         }
         html,body
@@ -28,7 +28,9 @@
         var image="truck3.png";
         var xinc,yinc;
         var map;
-        var marker;
+        var truckmarker;
+        var marker1,marker2,marker3,marker4,marker5;
+        var i=0;
         //var delhi={lat:28.7041,lng:77.1025};
         //var agra={lat:27.1767,lng:78.0081};
         var place;
@@ -37,26 +39,58 @@
         var allahabad={lat:25.435,lng:81.846};
         var varanasi={lat:25.317,lng:82.973};
         var gaya={lat:24.795,lng:84.999};
-        var route={delhi:agra,agra:allahabad,allahbad:varanasi,varnasi:gaya};
+        var route=[delhi,agra,allahabad,varanasi,gaya];
         function initMap()
         {
+            var flag='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             map=new google.maps.Map(document.getElementById('map'),{
                 center: delhi,
                 zoom:7
             });
-            marker=new google.maps.Marker({
+            truckmarker=new google.maps.Marker({
                 position:delhi,
                 map:map,
                 icon:image,
                 animation:google.maps.Animation.DROP
             });
-            marker.addListener('click',animate);        
+            marker1=new google.maps.Marker({
+                position:delhi,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            marker2=new google.maps.Marker({
+                position:agra,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            marker3=new google.maps.Marker({
+                position:allahabad,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            marker4=new google.maps.Marker({
+                position:varanasi,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            marker5=new google.maps.Marker({
+                position:gaya,
+                map:map,
+                icon:flag,
+                animation:google.maps.Animation.DROP
+            });
+            truckmarker.addListener('click',animate);        
         }
         function animate()
         {
-            float1=delhi.lat;
-            float2=delhi.lng;
-            if (delhi.lat<route.delhi.lat)
+            console.log(route[i]);
+            float1=route[i].lat;
+            float2=route[i].lng;
+            if (route[i].lat<route[i+1].lat)
             {
                 xinc=.001;
                 console.log("cond1");
@@ -66,7 +100,7 @@
                 xinc=-.001;
                 console.log("cond2");
             }
-            if (delhi.lng<route.delhi.lng)
+            if (route[i].lng<route[i+1].lng)
             {
                 yinc=.001;
                 console.log("cond3");
@@ -80,25 +114,36 @@
         }
         function inc()
         {       
-                if (float1==route.delhi.lat ) {
+                if (float1==route[i+1].lat ) {
                     xinc=0;
+                    console.log(i);
                 }
-                if (float2==route.delhi.lng)
+                if (float2==route[i+1].lng)
                 {
                     yinc=0;
+                    console.log(i);
                 }
-                if (float1==route.delhi.lat && float2==route.delhi.lng)
+                if (float1==route[i+1].lat && float2==route[i+1].lng)
                 {
-                    return;
+                    console.log(route[i]);
+                    if (i<route.length-2)
+                    {
+                        i=i+1;
+                        console.log(route[i]);
+                        animate();
+                    }
+                    else 
+                    {
+                        return;
+                    }
                 }  
                 float1=float1+xinc;
                 float2=float2+yinc;
                 float1=parseFloat(float1.toFixed(3));
                 float2=parseFloat(float2.toFixed(3));
                 place={lat:float1,lng:float2};
-                console.log(place);
-                setTimeout(inc,1); //1ms
-                marker.setPosition(place);       
+                setTimeout(inc,.5);
+                truckmarker.setPosition(place);       
         }
     </script>
     <script async defer
