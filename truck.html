@@ -28,7 +28,8 @@
         var image="truck3.png";
         var xinc,yinc;
         var map;
-        var truckmarker;
+        var truck,route;  //common for both trucks
+        var truckmarker,truckmarker2;
         var marker1,marker2,marker3,marker4,marker5,marker6;
         var i=0;
         var place;
@@ -41,13 +42,14 @@
         var panipat={lat:29.390,lng:76.963};
         var aligarh={lat:27.897,lng:78.088};
         var mathura={lat:27.492,lng:77.673};
-        var route=[delhi,agra,allahabad,varanasi,gaya,jamshedpur];
+        var route1=[delhi,agra,allahabad,varanasi,gaya,jamshedpur];
+        var route2=[panipat,aligarh,mathura];
         function initMap()
         {
             var flag='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             map=new google.maps.Map(document.getElementById('map'),{
                 center: delhi,
-                zoom:7
+                zoom:8
             });
             truckmarker=new google.maps.Marker({
                 position:delhi,
@@ -115,7 +117,18 @@
                 icon:flag,
                 animation:google.maps.Animation.DROP
             });
-            truckmarker.addListener('click',animate);        
+            truckmarker.addListener('click',animate1);
+            truckmarker2.addListener('click',animate2);        
+        }
+        function animate1(){
+            route=route1;
+            truck=truckmarker;
+            animate();
+        }
+        function animate2() {
+            route=route2;
+            truck=truckmarker2;
+            animate();
         }
         function animate()
         {
@@ -166,6 +179,7 @@
                     }
                     else 
                     {
+                        i=0;
                         return;
                     }
                 }  
@@ -175,7 +189,7 @@
                 float2=parseFloat(float2.toFixed(3));
                 place={lat:float1,lng:float2};
                 setTimeout(inc,.5);
-                truckmarker.setPosition(place);       
+                truck.setPosition(place);       
         }
     </script>
     <script async defer
