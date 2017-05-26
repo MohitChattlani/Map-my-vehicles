@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Map my vehicles</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0">
+	<style type="text/css">
+		#map
+		{
+			height: 100%;
+			width: 80%;
+		}
+		html,body
+		{
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+    <script type="text/javascript">
+        var image="truck3.png";
+        var xinc,yinc;
+        var map;
+        var marker;
+        //var delhi={lat:28.7041,lng:77.1025};
+        //var agra={lat:27.1767,lng:78.0081};
+        var place;
+        var delhi={lat:28.704,lng:77.102};
+        var agra={lat:27.176,lng:78.008};
+        var allahabad={lat:25.435,lng:81.846};
+        var varanasi={lat:25.317,lng:82.973};
+        var gaya={lat:24.795,lng:84.999};
+        var route={delhi:agra,agra:allahabad,allahbad:varanasi,varnasi:gaya};
+        function initMap()
+        {
+            map=new google.maps.Map(document.getElementById('map'),{
+                center: delhi,
+                zoom:7
+            });
+            marker=new google.maps.Marker({
+                position:delhi,
+                map:map,
+                icon:image,
+                animation:google.maps.Animation.DROP
+            });
+            marker.addListener('click',animate);        }
+        function animate()
+        {
+            float1=delhi.lat;
+            float2=delhi.lng;
+            if (delhi.lat<agra.lat)
+            {
+                xinc=.001;
+                console.log("cond1");
+            }
+            else
+            {
+                xinc=-.001;
+                console.log("cond2");
+            }
+            if (delhi.lng<agra.lng)
+            {
+                yinc=.001;
+                console.log("cond3");
+            }
+            else
+            {
+                yinc=-.001;
+                console.log("cond4");
+            }
+            while (true)
+            {
+                if (float1==agra.lat ) {
+                	xinc=0;
+                }
+                if (float2==agra.lng)
+                {
+                	yinc=0;
+                }
+                if (float1==agra.lat && float2==agra.lng)
+                {
+                	break;
+                }  
+                float1=float1+xinc;
+                float2=float2+yinc;
+                float1=parseFloat(float1.toFixed(3));
+            	float2=parseFloat(float2.toFixed(3));
+                place={lat:float1,lng:float2};
+                console.log(place);
+                marker.setPosition(place);    
+            }   
+        }
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWLR7fEOTMrXWCtyk1nZHUyCF5lGn36gI&callback=initMap">
+    </script>
+</body>
+</html>
